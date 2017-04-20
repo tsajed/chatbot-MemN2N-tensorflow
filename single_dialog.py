@@ -63,7 +63,7 @@ class chatBot(object):
         optimizer = tf.train.AdamOptimizer(learning_rate=self.learning_rate, epsilon=self.epsilon)
         self.sess=tf.Session()
         self.model = MemN2NDialog(self.batch_size, self.vocab_size, self.n_cand, self.sentence_size, self.embedding_size, self.candidates_vec, session=self.sess,
-                           hops=self.hops, max_grad_norm=self.max_grad_norm, optimizer=optimizer)
+                           hops=self.hops, max_grad_norm=self.max_grad_norm, optimizer=optimizer, task_id=task_id)
         self.saver = tf.train.Saver(max_to_keep=50)
         
         self.summary_writer = tf.train.SummaryWriter(self.model.root_dir, self.model.graph_output.graph)

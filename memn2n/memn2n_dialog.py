@@ -46,7 +46,8 @@ class MemN2NDialog(object):
         initializer=tf.random_normal_initializer(stddev=0.1),
         optimizer=tf.train.AdamOptimizer(learning_rate=1e-2),
         session=tf.Session(),
-        name='MemN2N'):
+        name='MemN2N',
+                 task_id=1):
         """Creates an End-To-End Memory Network
 
         Args:
@@ -104,7 +105,7 @@ class MemN2NDialog(object):
         
         # define summary directory
         timestamp = datetime.now().strftime('%Y%m%d-%H%M%S')
-        self.root_dir = "%s_%s/" % ('summary_output', timestamp)
+        self.root_dir = "%s_%s_%s_%s/" % ('task', str(task_id),'summary_output', timestamp)
         
         
         # cross entropy
