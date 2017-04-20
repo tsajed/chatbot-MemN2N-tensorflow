@@ -4,6 +4,8 @@ from __future__ import division
 import tensorflow as tf
 import numpy as np
 from six.moves import range
+from datetime import datetime
+
 
 def zero_nil_slot(t, name=None):
     """
@@ -99,7 +101,11 @@ class MemN2NDialog(object):
 
         self._build_inputs()
         self._build_vars()
-
+        
+        # define summary directory
+        timestamp = datetime.now().strftime('%Y%m%d-%H%M%S')
+        self.root_dir = "%s_%s/" % ('summary_output', timestamp)
+        
         
         # cross entropy
         logits = self._inference(self._stories, self._queries) # (batch_size, candidates_size)
@@ -132,6 +138,8 @@ class MemN2NDialog(object):
         self.predict_proba_op = predict_proba_op
         self.predict_log_proba_op = predict_log_proba_op
         self.train_op = train_op
+        
+        self.graph_output = self.loss_op
 
         init_op = tf.initialize_all_variables()
         self._sess = session
