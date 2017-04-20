@@ -4,7 +4,10 @@ import os
 import re
 import numpy as np
 import tensorflow as tf
+
 stop_words=set(["a","an","the"])
+
+
 def load_candidates(data_dir, task_id):
     assert task_id > 0 and task_id < 7
     candidates=[]

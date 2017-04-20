@@ -4,6 +4,8 @@ from __future__ import division
 import tensorflow as tf
 import numpy as np
 from six.moves import range
+from datetime import datetime
+
 
 def zero_nil_slot(t, name=None):
     """
@@ -44,7 +46,8 @@ class MemN2NDialog(object):
         initializer=tf.random_normal_initializer(stddev=0.1),
         optimizer=tf.train.AdamOptimizer(learning_rate=1e-2),
         session=tf.Session(),
-        name='MemN2N'):
+        name='MemN2N',
+                 task_id=1):
         """Creates an End-To-End Memory Network
 
         Args:
@@ -99,7 +102,11 @@ class MemN2NDialog(object):
 
         self._build_inputs()
         self._build_vars()
-
+        
+        # define summary directory
+        timestamp = datetime.now().strftime('%Y%m%d-%H%M%S')
+        self.root_dir = "%s_%s_%s_%s/" % ('task', str(task_id),'summary_output', timestamp)
+        
         
         # cross entropy
         logits = self._inference(self._stories, self._queries) # (batch_size, candidates_size)
@@ -132,6 +139,8 @@ class MemN2NDialog(object):
         self.predict_proba_op = predict_proba_op
         self.predict_log_proba_op = predict_log_proba_op
         self.train_op = train_op
+        
+        self.graph_output = self.loss_op
 
         init_op = tf.initialize_all_variables()
         self._sess = session

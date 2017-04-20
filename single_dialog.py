@@ -30,6 +30,7 @@ tf.flags.DEFINE_boolean('OOV', False, 'if True, use OOV test set')
 FLAGS = tf.flags.FLAGS
 print("Started Task:", FLAGS.task_id)
 
+
 class chatBot(object):
     def __init__(self,data_dir,model_dir,task_id,isInteractive=True,OOV=False,memory_size=50,random_state=None,batch_size=32,learning_rate=0.001,epsilon=1e-8,max_grad_norm=40.0,evaluation_interval=10,hops=3,epochs=200,embedding_size=20):
         self.data_dir=data_dir
@@ -62,8 +63,11 @@ class chatBot(object):
         optimizer = tf.train.AdamOptimizer(learning_rate=self.learning_rate, epsilon=self.epsilon)
         self.sess=tf.Session()
         self.model = MemN2NDialog(self.batch_size, self.vocab_size, self.n_cand, self.sentence_size, self.embedding_size, self.candidates_vec, session=self.sess,
-                           hops=self.hops, max_grad_norm=self.max_grad_norm, optimizer=optimizer)
+                           hops=self.hops, max_grad_norm=self.max_grad_norm, optimizer=optimizer, task_id=task_id)
         self.saver = tf.train.Saver(max_to_keep=50)
+        
+        self.summary_writer = tf.train.SummaryWriter(self.model.root_dir, self.model.graph_output.graph)
+        
 
 
     def build_vocab(self,data,candidates):
@@ -126,6 +130,7 @@ class chatBot(object):
         batches = zip(range(0, n_train-self.batch_size, self.batch_size), range(self.batch_size, n_train, self.batch_size))
         batches = [(start, end) for start, end in batches]
         best_validation_accuracy=0
+        
         for t in range(1, self.epochs+1):
             np.random.shuffle(batches)
             total_cost = 0.0
@@ -146,10 +151,19 @@ class chatBot(object):
                 print('Training Accuracy:', train_acc)
                 print('Validation Accuracy:', val_acc)
                 print('-----------------------')
-                if val_acc>best_validation_accuracy:
+
+                # write summary
+                train_acc_summary = tf.scalar_summary('task_' + str(self.task_id) + '/' + 'train_acc', tf.constant((train_acc), dtype=tf.float32))
+                val_acc_summary = tf.scalar_summary('task_' + str(self.task_id) + '/' + 'val_acc', tf.constant((val_acc), dtype=tf.float32))
+                merged_summary = tf.merge_summary([train_acc_summary, val_acc_summary])
+                summary_str = self.sess.run(merged_summary)
+                self.summary_writer.add_summary(summary_str, t)
+                self.summary_writer.flush()
+                
+                if val_acc > best_validation_accuracy:
                     best_validation_accuracy=val_acc
                     self.saver.save(self.sess,self.model_dir+'model.ckpt',global_step=t)
-
+                    
     def test(self):
         ckpt = tf.train.get_checkpoint_state(self.model_dir)
         if ckpt and ckpt.model_checkpoint_path:
