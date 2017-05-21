@@ -4,6 +4,16 @@ Implementation of [Learning End-to-End Goal-Oriented Dialog](https://arxiv.org/a
 
 ![MemN2N picture](https://www.dropbox.com/s/3rdwfxt80v45uqm/Screenshot%202015-11-19%2000.57.27.png?dl=1)
 
+
+### Install dependencies
+
+This project has been tested on python2.7 and GPU enabled TensorFlow. If you are using TensorFlow with a GPU(S) you'll need to follow the standard TF GPU installation documentation.
+
+```
+pip install -r requirements.txt
+
+```
+
 ### Get Started
 
 ```
