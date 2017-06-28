@@ -3,9 +3,6 @@
 Implementation of [Learning End-to-End Goal-Oriented Dialog](https://arxiv.org/abs/1605.07683) with sklearn-like interface using Tensorflow. Tasks are from the [bAbl](https://research.facebook.com/research/babi/) dataset. Based on an earlier implementation (can't find the link).
 
 ### Install dependencies
-
-This project has been tested on python2.7 and GPU enabled TensorFlow. If you are using TensorFlow with a GPU(S) you'll need to follow the standard TF GPU installation documentation.
-
 ```
 pip install -r requirements.txt
 
