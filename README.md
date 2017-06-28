@@ -2,15 +2,9 @@
 
 Implementation of [Learning End-to-End Goal-Oriented Dialog](https://arxiv.org/abs/1605.07683) with sklearn-like interface using Tensorflow. Tasks are from the [bAbl](https://research.facebook.com/research/babi/) dataset. Based on an earlier implementation (can't find the link).
 
-### Install dependencies
+### Install and Run
 ```
 pip install -r requirements.txt
-
-```
-
-### Get Started
-
-```
 python single_dialog.py
 ```
 
@@ -33,7 +27,7 @@ These files are also a good example of usage.
 ### Requirements
 
 * tensorflow
-* scikit-learn 0.17.1
+* scikit-learn
 * six
 * scipy
 
