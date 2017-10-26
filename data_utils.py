@@ -16,7 +16,7 @@ def load_candidates(data_dir, task_id):
     if task_id==6:
         candidates_f='dialog-babi-task6-dstc2-candidates.txt'
     else:
-        candidates_f='dialog-babi-candidates-2.txt'
+        candidates_f='dialog-babi-candidates.txt'
     with open(os.path.join(data_dir,candidates_f)) as f:
         for i,line in enumerate(f):
             candid_dic[line.strip().split(' ',1)[1]] = i
