@@ -17,9 +17,43 @@
 
 1 I am looking for treatment.	I wish I could help you with discussing your treatment. Unfortunately I am not a healthcare professional, but I can help connect you with other people who have a similar experience. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, I will be able to recommend people that can best discuss treatments with you.
 
+1 I need treatment.	I wish I could help you with discussing your treatment. Unfortunately I am not a healthcare professional, but I can help connect you with other people who have a similar experience. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, I will be able to recommend people that can best discuss treatments with you.
+
+1 I am ill. I need treatment.	I wish I could help you with discussing your treatment. Unfortunately I am not a healthcare professional, but I can help connect you with other people who have a similar experience. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, I will be able to recommend people that can best discuss treatments with you.
+
+1 I am feeling ill.	I wish I could help you with discussing your treatment. Unfortunately I am not a healthcare professional, but I can help connect you with other people who have a similar experience. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, I will be able to recommend people that can best discuss treatments with you.
+
+1 I am feeling ill What treatment options do you have?	I wish I could help you with discussing your treatment. Unfortunately I am not a healthcare professional, but I can help connect you with other people who have a similar experience. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, I will be able to recommend people that can best discuss treatments with you.
+
+1 What is the treatment for fever?	I wish I could help you with discussing your treatment. Unfortunately I am not a healthcare professional, but I can help connect you with other people who have a similar experience. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, I will be able to recommend people that can best discuss treatments with you.
+
+1 What treatment options do you have?	I wish I could help you with discussing your treatment. Unfortunately I am not a healthcare professional, but I can help connect you with other people who have a similar experience. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, I will be able to recommend people that can best discuss treatments with you.
+
+1 treatment?	I wish I could help you with discussing your treatment. Unfortunately I am not a healthcare professional, but I can help connect you with other people who have a similar experience. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, I will be able to recommend people that can best discuss treatments with you.
+
+1 treatment?	I wish I could help you with discussing your treatment. Unfortunately I am not a healthcare professional, but I can help connect you with other people who have a similar experience. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, I will be able to recommend people that can best discuss treatments with you.
+
+1 treatments?	I wish I could help you with discussing your treatment. Unfortunately I am not a healthcare professional, but I can help connect you with other people who have a similar experience. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, I will be able to recommend people that can best discuss treatments with you.
+
+1 What treatment for cancer?	I wish I could help you with discussing your treatment. Unfortunately I am not a healthcare professional, but I can help connect you with other people who have a similar experience. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, I will be able to recommend people that can best discuss treatments with you.
+
+1 I need treatment for cancer.	I wish I could help you with discussing your treatment. Unfortunately I am not a healthcare professional, but I can help connect you with other people who have a similar experience. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, I will be able to recommend people that can best discuss treatments with you.
+
 1 I have an emergency.	If you have an immediate emergency, please dial 911 or your local emergency number.
 
 1 I want to meet with new people.	It sounds like you are looking to meet others like you. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, you will see recommended connections. These recommendations are updated daily and can be found in MY CIRCLE.
+
+1 I need to meet with new people.	It sounds like you are looking to meet others like you. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, you will see recommended connections. These recommendations are updated daily and can be found in MY CIRCLE.
+
+1 How can I meet with new people.	It sounds like you are looking to meet others like you. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, you will see recommended connections. These recommendations are updated daily and can be found in MY CIRCLE.
+
+1 How to meet new people?	It sounds like you are looking to meet others like you. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, you will see recommended connections. These recommendations are updated daily and can be found in MY CIRCLE.
+
+1 How to connect?	It sounds like you are looking to meet others like you. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, you will see recommended connections. These recommendations are updated daily and can be found in MY CIRCLE.
+
+1 How to more people?	It sounds like you are looking to meet others like you. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, you will see recommended connections. These recommendations are updated daily and can be found in MY CIRCLE.
+
+1 How to socialize with more people?	It sounds like you are looking to meet others like you. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, you will see recommended connections. These recommendations are updated daily and can be found in MY CIRCLE.
 
 1 I want to know more about karma.	Are you interested in learning more about karma points? Karma points reward you for supporting yourself and others! Here is some quick info about Karma points. https://curatio.zendesk.com/hc/en-us/articles/115008476408-Karma-Points
 
@@ -35,7 +69,7 @@
 
 1 what up	Beep boop. What is up with you?
 
-1 tell me a joke	What do you call a doctor that fixes websites? A URLologist 
+1 tell me a joke	What do you call a doctor that fixes websites? A Urologist 
 2 tell me another joke	Did you hear about the guy whose whole left side was cut off? He's all right now.
 
 1 anyone there	Hi there! How can I help?

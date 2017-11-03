@@ -22,7 +22,7 @@ tf.flags.DEFINE_integer("hops", 3, "Number of hops in the Memory Network.")
 tf.flags.DEFINE_integer("epochs", 200, "Number of epochs to train for.")
 tf.flags.DEFINE_integer("embedding_size", 20,
                         "Embedding size for embedding matrices.")
-tf.flags.DEFINE_integer("memory_size", 50, "Maximum size of memory.")
+tf.flags.DEFINE_integer("memory_size", 100, "Maximum size of memory.")
 tf.flags.DEFINE_integer("task_id", 6, "bAbI task id, 1 <= id <= 6")
 tf.flags.DEFINE_integer("random_state", None, "Random state.")
 tf.flags.DEFINE_string("data_dir", "data/dialog-bAbI-tasks/",
@@ -72,7 +72,8 @@ class chatBot(object):
         optimizer = tf.train.AdamOptimizer(
             learning_rate=self.learning_rate, epsilon=self.epsilon)
         self.sess = tf.Session()
-        self.model = MemN2NDialog(self.batch_size, self.vocab_size, self.n_cand, self.sentence_size, self.embedding_size, self.candidates_vec, session=self.sess,
+        # Need to understand more about sentence size. Model failing because sentence size > candidate_sentence_size? Answers longer than queries?
+        self.model = MemN2NDialog(self.batch_size, self.vocab_size, self.n_cand, self.candidate_sentence_size, self.embedding_size, self.candidates_vec, session=self.sess,
                                   hops=self.hops, max_grad_norm=self.max_grad_norm, optimizer=optimizer, task_id=task_id)
         self.saver = tf.train.Saver(max_to_keep=50)
 
@@ -120,8 +121,10 @@ class chatBot(object):
                 continue
             u = tokenize(line)
             data = [(context, u, -1)]
+            # Need to take care of the candidate sentence size > sentence size. In both main function and here
+            # Whichever of candidate_size or candidate_sentence_size is higher, that should be allowed
             s, q, a = vectorize_data(
-                data, self.word_idx, self.sentence_size, self.batch_size, self.n_cand, self.memory_size)
+                data, self.word_idx, self.candidate_sentence_size, self.batch_size, self.n_cand, self.memory_size)
             preds = self.model.predict(s, q)
             r = self.indx2candid[preds[0]]
             print(r)
@@ -136,9 +139,9 @@ class chatBot(object):
 
     def train(self):
         trainS, trainQ, trainA = vectorize_data(
-            self.trainData, self.word_idx, self.sentence_size, self.batch_size, self.n_cand, self.memory_size)
+            self.trainData, self.word_idx, self.candidate_sentence_size, self.batch_size, self.n_cand, self.memory_size)
         valS, valQ, valA = vectorize_data(
-            self.valData, self.word_idx, self.sentence_size, self.batch_size, self.n_cand, self.memory_size)
+            self.valData, self.word_idx, self.candidate_sentence_size, self.batch_size, self.n_cand, self.memory_size)
         n_train = len(trainS)
         n_val = len(valS)
         print("Training Size", n_train)
@@ -197,7 +200,7 @@ class chatBot(object):
             self.interactive()
         else:
             testS, testQ, testA = vectorize_data(
-                self.testData, self.word_idx, self.sentence_size, self.batch_size, self.n_cand, self.memory_size)
+                self.testData, self.word_idx, self.candidate_sentence_size, self.batch_size, self.n_cand, self.memory_size)
             n_test = len(testS)
             print("Testing Size", n_test)
             test_preds = self.batch_predict(testS, testQ, n_test)

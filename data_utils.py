@@ -9,14 +9,14 @@ stop_words=set(["a","an","the"])
 
 
 def load_candidates(data_dir, task_id):
-    assert task_id > 0 and task_id < 7
+    assert task_id > 0 and task_id < 8
     candidates=[]
     candidates_f=None
     candid_dic={}
     if task_id==6:
         candidates_f='dialog-babi-task6-dstc2-candidates.txt'
     else:
-        candidates_f='dialog-babi-candidates.txt'
+        candidates_f='dialog-babi-candidates-2.txt'
     with open(os.path.join(data_dir,candidates_f)) as f:
         for i,line in enumerate(f):
             candid_dic[line.strip().split(' ',1)[1]] = i
@@ -31,7 +31,7 @@ def load_dialog_task(data_dir, task_id, candid_dic, isOOV):
 
     Returns a tuple containing the training and testing data for the task.
     '''
-    assert task_id > 0 and task_id < 7
+    assert task_id > 0 and task_id < 8
 
     files = os.listdir(data_dir)
     files = [os.path.join(data_dir, f) for f in files]
