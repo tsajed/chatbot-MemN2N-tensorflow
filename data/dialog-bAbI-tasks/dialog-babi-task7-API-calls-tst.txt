@@ -3,15 +3,35 @@
 1 Hi	Hi, this is Mary, your support agent. 
 2 I want to ask some FAQ.	Please try our FAQ page here: https://curatio.zendesk.com/hc/en-us
 
+1 I want to ask some FAQ.	Please try our FAQ page here: https://curatio.zendesk.com/hc/en-us
+
+1 Can I ask some FAQ.	Please try our FAQ page here: https://curatio.zendesk.com/hc/en-us
+
 1 Hi. I need some help.	It sounds like you need some help? As your personal support agent, I am here to help! I may need a little more time to give you a great response as I'm still learning how to best answer your questions. In the meantime, you can check out our support page at: https://curatio.zendesk.com/hc/en-us or you can get in touch with someone right away by sending an email to support@curatio.me
 
 1 I want to get started with Curatio	Hi! I'd be glad to help you get started. FIRST, you should check that you're in the right community by tapping the menu at the top and selecting 'Add a Community'. If there is no community that fits your specific needs, the Home community is right for you!. SECOND, you need to complete your profile from the MY CIRCLE or MY PROFILE tab at the bottom of the screen.
+
+1 How to get started with Curatio	Hi! I'd be glad to help you get started. FIRST, you should check that you're in the right community by tapping the menu at the top and selecting 'Add a Community'. If there is no community that fits your specific needs, the Home community is right for you!. SECOND, you need to complete your profile from the MY CIRCLE or MY PROFILE tab at the bottom of the screen.
 
 1 I want to find others on this platform	It sounds like you are looking for others to connect with. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, you will see recommended friends. These recommendations are updated daily and can be found in MY CIRCLE.
 
 1 I am confused. What should I do?	I'm sorry that you're confused. I am still learning how to best help you, so I may need a little more time to get back to you. In the meantime, you can check out our help center here: https://curatio.zendesk.com/
 
+1 I am confused	I'm sorry that you're confused. I am still learning how to best help you, so I may need a little more time to get back to you. In the meantime, you can check out our help center here: https://curatio.zendesk.com/
+
 1 I am looking for a community.	Are you looking for a specific community? If we don't have one that works for you, you can connect with others in the Home Community - this is meant for anyone living with any condition. Furthermore, you can request a community by letting me know here.
+
+1 I want a community.	Are you looking for a specific community? If we don't have one that works for you, you can connect with others in the Home Community - this is meant for anyone living with any condition. Furthermore, you can request a community by letting me know here.
+
+1 I want to look for community.	Are you looking for a specific community? If we don't have one that works for you, you can connect with others in the Home Community - this is meant for anyone living with any condition. Furthermore, you can request a community by letting me know here.
+
+1 I want to find a community.	Are you looking for a specific community? If we don't have one that works for you, you can connect with others in the Home Community - this is meant for anyone living with any condition. Furthermore, you can request a community by letting me know here.
+
+1 How to find a community?	Are you looking for a specific community? If we don't have one that works for you, you can connect with others in the Home Community - this is meant for anyone living with any condition. Furthermore, you can request a community by letting me know here.
+
+1 How to community?	Are you looking for a specific community? If we don't have one that works for you, you can connect with others in the Home Community - this is meant for anyone living with any condition. Furthermore, you can request a community by letting me know here.
+
+1 How to look for a community?	Are you looking for a specific community? If we don't have one that works for you, you can connect with others in the Home Community - this is meant for anyone living with any condition. Furthermore, you can request a community by letting me know here.
 
 1 I want to connect with people.	It sounds like you are looking to connect with others like you. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, you will see recommended connections. These recommendations are updated daily and can be found in MY CIRCLE. 
 
@@ -45,6 +65,20 @@
 
 1 I need to meet with new people.	It sounds like you are looking to meet others like you. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, you will see recommended connections. These recommendations are updated daily and can be found in MY CIRCLE.
 
+1 I need to meet with new people and I want treatment.	Unfortunately I am not a healthcare professional, but I can help connect you with other people who have a similar experience. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, I will be able to recommend people that can best discuss treatments with you. 
+
+1 I need to connect with new people and I need treatment.	Unfortunately I am not a healthcare professional, but I can help connect you with other people who have a similar experience. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, I will be able to recommend people that can best discuss treatments with you. 
+
+1 I want to meet with new people and I want treatment.	Unfortunately I am not a healthcare professional, but I can help connect you with other people who have a similar experience. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, I will be able to recommend people that can best discuss treatments with you. 
+
+1 I want treatment and I need to meet with people.	Unfortunately I am not a healthcare professional, but I can help connect you with other people who have a similar experience. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, I will be able to recommend people that can best discuss treatments with you. 
+
+1 I need treatment and I want to meet with people.	Unfortunately I am not a healthcare professional, but I can help connect you with other people who have a similar experience. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, I will be able to recommend people that can best discuss treatments with you. 
+
+1 I want treatment and I want to meet with people.	Unfortunately I am not a healthcare professional, but I can help connect you with other people who have a similar experience. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, I will be able to recommend people that can best discuss treatments with you. 
+
+1 I need treatment and I need to meet with people.	Unfortunately I am not a healthcare professional, but I can help connect you with other people who have a similar experience. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, I will be able to recommend people that can best discuss treatments with you. 
+
 1 How can I meet with new people.	It sounds like you are looking to meet others like you. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, you will see recommended connections. These recommendations are updated daily and can be found in MY CIRCLE.
 
 1 How to meet new people?	It sounds like you are looking to meet others like you. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, you will see recommended connections. These recommendations are updated daily and can be found in MY CIRCLE.
@@ -55,7 +89,15 @@
 
 1 How to socialize with more people?	It sounds like you are looking to meet others like you. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, you will see recommended connections. These recommendations are updated daily and can be found in MY CIRCLE.
 
+1 How to socialize?	It sounds like you are looking to meet others like you. If you haven't already completed your profile, start by tapping on MY CIRCLE or MY PROFILE and complete the information there. Once you have completed this information, you will see recommended connections. These recommendations are updated daily and can be found in MY CIRCLE.
+
 1 I want to know more about karma.	Are you interested in learning more about karma points? Karma points reward you for supporting yourself and others! Here is some quick info about Karma points. https://curatio.zendesk.com/hc/en-us/articles/115008476408-Karma-Points
+
+1 karma points.	Are you interested in learning more about karma points? Karma points reward you for supporting yourself and others! Here is some quick info about Karma points. https://curatio.zendesk.com/hc/en-us/articles/115008476408-Karma-Points
+
+1 What are karma points?	Are you interested in learning more about karma points? Karma points reward you for supporting yourself and others! Here is some quick info about Karma points. https://curatio.zendesk.com/hc/en-us/articles/115008476408-Karma-Points
+
+1 How to get karma points?	Are you interested in learning more about karma points? Karma points reward you for supporting yourself and others! Here is some quick info about Karma points. https://curatio.zendesk.com/hc/en-us/articles/115008476408-Karma-Points
 
 1 Hello	Hi there! How can I help? I am your support agent and here to help you navigate through the app. 
 
@@ -67,7 +109,15 @@
 
 1 I want to leave some feedback	Would you like to send me feedback? You can share your feedback with me here and I would appreciate it if you can complete my survey: https://curatiome.typeform.com/to/lC3Tv7
 
+1 I want to offer some feedback	Would you like to send me feedback? You can share your feedback with me here and I would appreciate it if you can complete my survey: https://curatiome.typeform.com/to/lC3Tv7
+
 1 what up	Beep boop. What is up with you?
+
+1 whats up	Beep boop. What is up with you?
+
+1 what's up	Beep boop. What is up with you?
+
+1 what's up with you	Beep boop. What is up with you?
 
 1 tell me a joke	What do you call a doctor that fixes websites? A Urologist 
 2 tell me another joke	Did you hear about the guy whose whole left side was cut off? He's all right now.
@@ -75,3 +125,9 @@
 1 anyone there	Hi there! How can I help?
 
 1 anybody there	Hi there! How can I help?
+
+1 anybody in there	Hi there! How can I help?
+
+1 Is anyone in there	Hi there! How can I help?
+
+1 Is anyone there	Hi there! How can I help?
