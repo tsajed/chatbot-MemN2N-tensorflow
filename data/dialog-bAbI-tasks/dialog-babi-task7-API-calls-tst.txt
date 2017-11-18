@@ -402,6 +402,12 @@
 
 1 change notification	You can turn off notifications and change how you receive notifications from Curatio on your iPhone:\n1. From your iPhone home screen tap Settings\n2. Scroll down to the last section of icons and tap Curatio\n3. Tap Notifications\n4. From here you can adjust how you receive notifications from the Curatio app or turn off all notifications from the Curatio app by unchecking ‘Allow Notifications’.
 
+1 How to change notification setting	You can turn off notifications and change how you receive notifications from Curatio on your iPhone:\n1. From your iPhone home screen tap Settings\n2. Scroll down to the last section of icons and tap Curatio\n3. Tap Notifications\n4. From here you can adjust how you receive notifications from the Curatio app or turn off all notifications from the Curatio app by unchecking ‘Allow Notifications’.
+
+1 How should I change notifications	You can turn off notifications and change how you receive notifications from Curatio on your iPhone:\n1. From your iPhone home screen tap Settings\n2. Scroll down to the last section of icons and tap Curatio\n3. Tap Notifications\n4. From here you can adjust how you receive notifications from the Curatio app or turn off all notifications from the Curatio app by unchecking ‘Allow Notifications’.
+
+1 How do I change notifications	You can turn off notifications and change how you receive notifications from Curatio on your iPhone:\n1. From your iPhone home screen tap Settings\n2. Scroll down to the last section of icons and tap Curatio\n3. Tap Notifications\n4. From here you can adjust how you receive notifications from the Curatio app or turn off all notifications from the Curatio app by unchecking ‘Allow Notifications’.
+
 1 How do I provide positive or negative feedback to Curatio?	You can provide feedback to Curatio by sending an email to support@curatio.me. Please include in the subject line ‘Feedback for Curatio’. 
 
 1 How to provide positive or negative feedback to Curatio?	You can provide feedback to Curatio by sending an email to support@curatio.me. Please include in the subject line ‘Feedback for Curatio’. 
@@ -414,6 +420,14 @@
 
 1 give feedback to Curatio?	You can provide feedback to Curatio by sending an email to support@curatio.me. Please include in the subject line ‘Feedback for Curatio’. 
 
+1 give feedback on Curatio?	You can provide feedback to Curatio by sending an email to support@curatio.me. Please include in the subject line ‘Feedback for Curatio’.
+
+1 give feedback for Curatio?	You can provide feedback to Curatio by sending an email to support@curatio.me. Please include in the subject line ‘Feedback for Curatio’.
+
+1 How to provide feedback to Curatio?	You can provide feedback to Curatio by sending an email to support@curatio.me. Please include in the subject line ‘Feedback for Curatio’.
+
+1 How to provide feedback Curatio?	You can provide feedback to Curatio by sending an email to support@curatio.me. Please include in the subject line ‘Feedback for Curatio’.
+
 1 How can I learn more about Curatio, products, services, and what you guys are up to next?	We are happy to hear you are interested in what we are doing! To stay informed, you can join our mailing list by going to our website, https://curatio.me/. At the bottom of the page there is a box to enter your email address to receive our updates. 
 
 1 learn more about Curatio, products, services, and what you guys are up to next?	We are happy to hear you are interested in what we are doing! To stay informed, you can join our mailing list by going to our website, https://curatio.me/. At the bottom of the page there is a box to enter your email address to receive our updates. 
@@ -421,6 +435,14 @@
 1 How can I learn more about Curatio, products, services?	We are happy to hear you are interested in what we are doing! To stay informed, you can join our mailing list by going to our website, https://curatio.me/. At the bottom of the page there is a box to enter your email address to receive our updates. 
 
 1 what you guys are up to next?	We are happy to hear you are interested in what we are doing! To stay informed, you can join our mailing list by going to our website, https://curatio.me/. At the bottom of the page there is a box to enter your email address to receive our updates. 
+
+1 How to learn more about Curatio?	We are happy to hear you are interested in what we are doing! To stay informed, you can join our mailing list by going to our website, https://curatio.me/. At the bottom of the page there is a box to enter your email address to receive our updates. 
+
+1 How to learn more about Curatio, services, products?	We are happy to hear you are interested in what we are doing! To stay informed, you can join our mailing list by going to our website, https://curatio.me/. At the bottom of the page there is a box to enter your email address to receive our updates. 
+
+1 How can I learn more about services and products?	We are happy to hear you are interested in what we are doing! To stay informed, you can join our mailing list by going to our website, https://curatio.me/. At the bottom of the page there is a box to enter your email address to receive our updates. 
+
+1 How can I learn more about services and products on Curatio?	We are happy to hear you are interested in what we are doing! To stay informed, you can join our mailing list by going to our website, https://curatio.me/. At the bottom of the page there is a box to enter your email address to receive our updates. 
 
 1 learn more about Curatio, products? What's next	We are happy to hear you are interested in what we are doing! To stay informed, you can join our mailing list by going to our website, https://curatio.me/. At the bottom of the page there is a box to enter your email address to receive our updates. 
 
@@ -433,3 +455,7 @@
 1 How do I report offensive content	If you encounter an offensive post on Curatio, you can notify a Curatio moderator by flagging the post as inappropriate. To flag a post as inappropriate:\n1. While viewing the offensive post, on the bottom right of the post, tap More\n2. Tap Flag as inappropriate
 
 1 Where do I report offensive content?	If you encounter an offensive post on Curatio, you can notify a Curatio moderator by flagging the post as inappropriate. To flag a post as inappropriate:\n1. While viewing the offensive post, on the bottom right of the post, tap More\n2. Tap Flag as inappropriate
+
+1 report offensive content?	If you encounter an offensive post on Curatio, you can notify a Curatio moderator by flagging the post as inappropriate. To flag a post as inappropriate:\n1. While viewing the offensive post, on the bottom right of the post, tap More\n2. Tap Flag as inappropriate
+
+1 report offensive content on Curatio	If you encounter an offensive post on Curatio, you can notify a Curatio moderator by flagging the post as inappropriate. To flag a post as inappropriate:\n1. While viewing the offensive post, on the bottom right of the post, tap More\n2. Tap Flag as inappropriate
