@@ -168,6 +168,9 @@ class MemN2NDialog(object):
             A = tf.concat([nil_word_slot, self._init(
                 [self._vocab_size - 1, self._embedding_size])], 0)
             self.A = tf.Variable(A, name="A")
+            # U_emb = tf.concat([nil_word_slot, self._init(
+            #     [self._vocab_size - 1, self._embedding_size])], 0)
+            # self.U_emb = tf.Variable(U_emb, name="U_emb")
             self.H = tf.Variable(self._init(
                 [self._embedding_size, self._embedding_size]), name="H")
             W = tf.concat([nil_word_slot, self._init(
@@ -181,9 +184,19 @@ class MemN2NDialog(object):
             q_emb = tf.nn.embedding_lookup(self.A, queries)
             u_0 = tf.reduce_sum(q_emb, 1)
             u = [u_0]
+            branch_u = u_0
+            # Use different embedding matrix for final addition step with candidates_embedding
+            # u_emb = tf.nn.embedding_lookup(self.U_emb, queries)
+            #u_emb = tf.reduce_sum(u_emb, 1)
+            # u_emb = [u_emb]
+            # u_emb = tf.expand_dims(u_emb, 1)
+
             for _ in range(self._hops):
                 m_emb = tf.nn.embedding_lookup(self.A, stories)
+                # Append question embedding with memory embedding but from different embedding matrix U_emb
+                # m_emb = tf.concat([m_emb, u_emb], 1)
                 m = tf.reduce_sum(m_emb, 2)
+
                 # hack to get around no reduce_dot
                 u_temp = tf.transpose(tf.expand_dims(u[-1], -1), [0, 2, 1])
                 dotted = tf.reduce_sum(m * u_temp, 2)
@@ -202,8 +215,16 @@ class MemN2NDialog(object):
                     u_k = self._nonlin(u_k)
 
                 u.append(u_k)
+                branch_u = branch_u + u_k
             candidates_emb = tf.nn.embedding_lookup(self.W, self._candidates)
             candidates_emb_sum = tf.reduce_sum(candidates_emb, 1)
+
+            # inner product of candidates_emb_sum and question embedding u_0
+            # another embedding of question matrix before matmul
+            # instead return tf.matmul(u_0, tf.transpose(candidates_emb_sum))
+            # Try element wise multiplication of u_k and u_0 or addition element wise
+
+            #u_k = u_0 + u_k
             return tf.matmul(u_k, tf.transpose(candidates_emb_sum))
             # logits=tf.matmul(u_k, self.W)
             # return

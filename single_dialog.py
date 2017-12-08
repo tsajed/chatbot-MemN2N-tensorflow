@@ -65,6 +65,7 @@ class chatBot(object):
         self.trainData, self.testData, self.valData = load_dialog_task(
             self.data_dir, self.task_id, self.candid2indx, self.OOV)
         data = self.trainData + self.testData + self.valData
+
         self.build_vocab(data, candidates)
         # self.candidates_vec=vectorize_candidates_sparse(candidates,self.word_idx)
         self.candidates_vec = vectorize_candidates(

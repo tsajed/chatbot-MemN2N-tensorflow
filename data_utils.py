@@ -188,6 +188,7 @@ def vectorize_data(data, word_idx, sentence_size, batch_size, candidates_size, m
         if i%batch_size==0:
             memory_size=max(1,min(max_memory_size,len(story)))
         ss = []
+
         for i, sentence in enumerate(story, 1):
             ls = max(0, sentence_size - len(sentence))
             ss.append([word_idx[w] if w in word_idx else 0 for w in sentence] + [0] * ls)
