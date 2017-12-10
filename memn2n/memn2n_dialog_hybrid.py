@@ -208,9 +208,10 @@ class MemN2NDialogHybrid(object):
                 c_temp = tf.transpose(m, [0, 2, 1])
                 o_k = tf.reduce_sum(c_temp * probs_temp, 2)
 
-                u_k = tf.matmul(u[-1], self.H) + o_k
+                u_k = tf.matmul(u[-1], self.H) + tf.nn.sigmoid(o_k)
                 # u_k=u[-1]+tf.matmul(o_k,self.H)
                 # nonlinearity
+                #u_k = tf.nn.sigmoid(u_k)
                 if self._nonlin:
                     u_k = self._nonlin(u_k)
 
@@ -263,3 +264,7 @@ class MemN2NDialogHybrid(object):
         # Before training use word_embeddings from glove vectors
         self.A = word_embeddings
         self.W = word_embeddings
+
+    # Leaky relu activation function
+    def lrelu(self, x, alpha):
+        return tf.nn.relu(x) - alpha * tf.nn.relu(-x)

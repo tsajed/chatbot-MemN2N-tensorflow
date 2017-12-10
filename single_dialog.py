@@ -77,7 +77,7 @@ class chatBot(object):
         # Set max sentence vector size
         self.set_max_sentence_length()
         # Need to understand more about sentence size. Model failing because sentence size > candidate_sentence_size? Answers longer than queries?
-        self.model = MemN2NDialog(self.batch_size, self.vocab_size, self.n_cand, self.max_sentence_size, self.embedding_size, self.candidates_vec, session=self.sess,
+        self.model = MemN2NDialogHybrid(self.batch_size, self.vocab_size, self.n_cand, self.max_sentence_size, self.embedding_size, self.candidates_vec, session=self.sess,
                                   hops=self.hops, max_grad_norm=self.max_grad_norm, optimizer=optimizer, task_id=task_id)
         # self.model = MemN2NDialogHybrid(self.batch_size, self.vocab_size, self.n_cand, self.max_sentence_size, self.embedding_size, self.candidates_vec, session=self.sess,
         #                           hops=self.hops, max_grad_norm=self.max_grad_norm, optimizer=optimizer, task_id=task_id)
