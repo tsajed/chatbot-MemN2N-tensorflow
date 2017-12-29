@@ -247,6 +247,10 @@ class chatBot(object):
         batches = [(start, end) for start, end in batches]
         best_validation_accuracy = 0
 
+        train_labels = np.argmax(trainA, axis=1)
+        #test_labels = np.argmax(testA, axis=1)
+        val_labels = np.argmax(valA, axis=1)
+
         for t in range(1, self.epochs + 1):
             np.random.shuffle(batches)
             total_cost = 0.0
@@ -271,8 +275,8 @@ class chatBot(object):
                     train_preds += list(pred)
     
                 val_preds = model.predict(valS, valQ, get_temporal_encoding(valS, random_time=0.0), True, valM)
-                train_acc = metrics.accuracy_score(np.array(train_preds), trainA)
-                val_acc = metrics.accuracy_score(val_preds, valA)
+                train_acc = metrics.accuracy_score(np.array(train_preds), train_labels)
+                val_acc = metrics.accuracy_score(val_preds, val_labels)
                 
                 last_train_acc = train_acc
                 last_val_acc = val_acc
@@ -313,9 +317,10 @@ class chatBot(object):
                 self.testData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
             testM = create_match_features(self.testData, self.indx2candid, self.kb)
             n_test = len(testS)
+            test_labels = np.argmax(testA, axis=1)
             print("Testing Size", n_test)
             test_preds = model.predict(testS, testQ, get_temporal_encoding(testS, random_time=0.0), linear_start, testM)
-            test_acc = metrics.accuracy_score(test_preds, testA)
+            test_acc = metrics.accuracy_score(test_preds, test_labels)
             # test_preds = self.batch_predict(testS, testQ, n_test)
             # test_acc = metrics.accuracy_score(test_preds, testA)
             print("Testing Accuracy:", test_acc)
