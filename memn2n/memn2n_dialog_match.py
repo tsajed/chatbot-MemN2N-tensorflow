@@ -210,7 +210,7 @@ class MemN2NDialogMatch(object):
         self._stories = tf.placeholder(tf.int32, [None, None, self._sentence_size], name="stories")
         self._queries = tf.placeholder(tf.int32, [None, self._sentence_size], name="queries")
 #         self._answers = tf.placeholder(tf.int32, [None, self._vocab_size], name="answers")
-        self._answers = tf.placeholder(tf.int32, [None], name="answers")
+        self._answers = tf.placeholder(tf.int32, [None, self._nb_answers], name="answers")
         self._temporal = tf.placeholder(tf.int32, [None, None], name="temproal")
         self._linear_start = tf.placeholder(tf.bool, [], name="linear_start")
         self._match_features = tf.placeholder(tf.float32, [None, 7, self._nb_answers], name="match_features")
@@ -435,7 +435,7 @@ class MemN2NDialogMatch(object):
 
     def _split_into_groups(self, l, n):
         """Yield successive n-sized chunks from l."""
-        for i in xrange(0, len(l), n):
+        for i in range(0, len(l), n):
             yield l[i:i + n]
             
     def predict(self, stories, queries, temporal, linear_start, match_features=None):

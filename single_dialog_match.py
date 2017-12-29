@@ -43,7 +43,10 @@ def get_temporal_encoding(d, random_time=0.):
     te = []
     for i in range(len(d)):
         l = int(np.sign(d[i].sum(axis=1)).sum())
-        data_shape = np.array(d).shape[1]
+        try:
+            data_shape = np.array(d).shape[1]
+        except IndexError:
+            data_shape = 14
         temporal_encoding = np.zeros(data_shape)
         if l != 0:
             if random_time > 0.:
@@ -226,6 +229,7 @@ class chatBot(object):
             self.valData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
         n_train = len(trainS)
         n_val = len(valS)
+        batch_size = self.batch_size
 
         trainM, valM, testM = None, None, None
         if FLAGS.match:
@@ -260,21 +264,22 @@ class chatBot(object):
                 a = trainA[start:end]
                 m = trainM[start:end] if FLAGS.match else None
                 temporal = get_temporal_encoding(s, random_time=FLAGS.random_time)
-                cost_t = self.model.batch_fit(s, q, a, temporal, True, m)
+                cost_t = self.model.batch_fit(s, q, a, temporal, False, m)
                 total_cost += cost_t
 
             if t % self.evaluation_interval == 0:
                 train_preds = []
-                for start in range(0, n_train, batch_size):
-                    end = start + batch_size
+                for start in range(0, n_train, self.batch_size):
+                    end = start + self.batch_size
                     s = trainS[start:end]
                     q = trainQ[start:end]
                     m = trainM[start:end] if FLAGS.match else None
                     temporal = get_temporal_encoding(s, random_time=0.0)
-                    pred = model.predict(s, q, temporal, linear_start, m)
+                    pred = self.model.predict(s, q, temporal, False, m)
                     train_preds += list(pred)
     
-                val_preds = model.predict(valS, valQ, get_temporal_encoding(valS, random_time=0.0), True, valM)
+                #val_preds = self.model.predict(valS, valQ, get_temporal_encoding(valS, random_time=0.0), True, valM)
+                val_preds = self.batch_predict(valS, valQ, n_val, valM)
                 train_acc = metrics.accuracy_score(np.array(train_preds), train_labels)
                 val_acc = metrics.accuracy_score(val_preds, val_labels)
                 
@@ -325,13 +330,14 @@ class chatBot(object):
             # test_acc = metrics.accuracy_score(test_preds, testA)
             print("Testing Accuracy:", test_acc)
 
-    def batch_predict(self, S, Q, n):
+    def batch_predict(self, S, Q, n, M):
         preds = []
         for start in range(0, n, self.batch_size):
             end = start + self.batch_size
             s = S[start:end]
             q = Q[start:end]
-            pred = self.model.predict(s, q)
+            m = M[start:end] if FLAGS.match else None
+            pred = self.model.predict(s, q, get_temporal_encoding(s, random_time=0.0), True, m)
             preds += list(pred)
         return preds
 
