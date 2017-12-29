@@ -210,3 +210,16 @@ def vectorize_data(data, word_idx, sentence_size, batch_size, candidates_size, m
         Q.append(np.array(q))
         A.append(np.array(answer))
     return S, Q, A
+
+def parse_kb(in_file):
+    ret = defaultdict(set)
+    with open(in_file) as f:
+        for line in f:
+            line = line.strip()
+            attrs = line.split('\t')
+            assert len(attrs) == 2
+            kb_type = attrs[0].split(' ')[-1]
+            assert kb_type[:2] == 'R_'
+            value = attrs[1]
+            ret[kb_type].add(value)
+    return ret

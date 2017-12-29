@@ -47,6 +47,29 @@
 1 Is there anything else that I can help you with today?
 1 Take care and have a great day.
 1 post_link_topic.\nDoes this help?
-1 api_call_previous_posts
-1 api_call_web
-1 I see. I did not find anyone in the community discussing <ENTITY>. Would you be able to give me better tag words to search for?
+1 api_call_previous_posts chelation therapy
+1 api_call_previous_posts heart attacks
+1 api_call_web chelation therapy
+1 api_call_web heart attacks
+1 api_call_previous_posts lung cancer
+1 api_call_web lung cancer
+1 api_call_previous_posts chelation pumps
+1 api_call_web chelation pumps
+1 api_call_previous_posts stroke
+1 api_call_web stroke
+1 api_call_previous_posts liver disease
+1 api_call_web liver disease
+1 api_call_previous_posts eye infection
+1 api_call_web eye infection
+1 api_call_previous_posts brain cancer
+1 api_call_web brain cancer
+1 api_call_previous_posts acne 
+1 api_call_web acne
+1 api_call_previous_posts fever
+1 api_call_web fever
+1 api_call_previous_posts nausea
+1 api_call_web nausea
+1 api_call_previous_posts lungs
+1 api_call_web lungs
+1 I see. I did not find anyone in the community discussing chelation therapy. Would you be able to give me better tag words to search for?
+1 I see. I did not find anyone in the community discussing lung cancer. Would you be able to give me better tag words to search for?
