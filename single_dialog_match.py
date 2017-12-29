@@ -4,7 +4,7 @@ from __future__ import print_function
 from data_utils import load_dialog_task, vectorize_data, load_candidates, vectorize_candidates, vectorize_candidates_sparse, tokenize, parse_kb
 from sklearn import metrics
 from memn2n import MemN2NDialog
-from memn2n import MemN2NDialogHybrid
+from memn2n import MemN2NDialogMatch
 from itertools import chain
 from six.moves import range, reduce
 import sys
@@ -33,8 +33,9 @@ tf.flags.DEFINE_string("model_dir", "model/",
 tf.flags.DEFINE_boolean('train', True, 'if True, begin to train')
 tf.flags.DEFINE_boolean('interactive', False, 'if True, interactive')
 tf.flags.DEFINE_boolean('OOV', False, 'if True, use OOV test set')
-tf.flags.DEFINE_boolean("match", True, "Use the match features [False]")
+tf.flags.DEFINE_boolean("match", False, "Use the match features [False]")
 tf.flags.DEFINE_string("kb_file", "data/dialog-bAbI-tasks/dialog-babi-kb-all.txt", "KB file path")
+tf.flags.DEFINE_float("random_time", 0.1, "Random time [0.1]")
 FLAGS = tf.flags.FLAGS
 print("Started Task:", FLAGS.task_id)
 
@@ -42,12 +43,13 @@ def get_temporal_encoding(d, random_time=0.):
     te = []
     for i in range(len(d)):
         l = int(np.sign(d[i].sum(axis=1)).sum())
-        temporal_encoding = np.zeros(d.shape[1])
+        data_shape = np.array(d).shape[1]
+        temporal_encoding = np.zeros(data_shape)
         if l != 0:
             if random_time > 0.:
                 nblank = np.random.randint(0, np.ceil(l * random_time) + 1)
                 rt = np.random.permutation(l + nblank) + 1 # +1: permutation starts from 0
-                rt = np.vectorize(lambda x: d.shape[1] if x > d.shape[1] else x)(rt)
+                rt = np.vectorize(lambda x: data_shape if x > data_shape else x)(rt)
                 temporal_encoding[:l] = np.sort(rt[:l])[::-1]
             else:
                 temporal_encoding[:l] = np.arange(l, 0, -1)
@@ -69,7 +71,7 @@ def get_kb_type_idx(t):
     return kb_types.index(t)
 
 def get_kb_type(kb, word):
-    for t, v in kb.iteritems():
+    for t, v in kb.items():
         if word in v:
             return t
     return None
@@ -133,18 +135,18 @@ class chatBot(object):
         # Set max sentence vector size
         self.set_max_sentence_length()
 
-        answer_n_hot = np.zeros((vocab_size, len(ans2idx)))
-        for ans_it in range(len(idx2ans)):
-            ans = idx2ans[ans_it]
-            n_hot = np.zeros((vocab_size, ))
-            for w in ans.split(' '):
-                assert w in word_idx
-                n_hot[word_idx[w]] = 1
+        answer_n_hot = np.zeros((self.vocab_size, len(self.candid2indx)))
+        for ans_it in range(len(self.indx2candid)):
+            ans = self.indx2candid[ans_it]
+            n_hot = np.zeros((self.vocab_size, ))
+            for w in tokenize(ans):
+                assert w in self.word_idx
+                n_hot[self.word_idx[w]] = 1
             answer_n_hot[:, ans_it] = n_hot
 
         # Need to understand more about sentence size. Model failing because sentence size > candidate_sentence_size? Answers longer than queries?
-        self.model = MemN2NDialogMatch(self.batch_size, self.vocab_size, self.n_cand, self.max_sentence_size, self.embedding_size, answer_n_hot, match=FLAGS.match, session=self.sess,
-                                  hops=self.hops, max_grad_norm=self.max_grad_norm, optimizer=optimizer)
+        self.model = MemN2NDialogMatch(self.batch_size, self.vocab_size, self.max_sentence_size, self.memory_size, self.embedding_size, answer_n_hot, match=FLAGS.match, session=self.sess,
+                                  hops=self.hops, max_grad_norm=self.max_grad_norm, optimizer=optimizer, task_id = self.task_id)
         # self.model = MemN2NDialogHybrid(self.batch_size, self.vocab_size, self.n_cand, self.max_sentence_size, self.embedding_size, self.candidates_vec, session=self.sess,
         #                           hops=self.hops, max_grad_norm=self.max_grad_norm, optimizer=optimizer, task_id=task_id)
         self.saver = tf.train.Saver(max_to_keep=50)
@@ -228,13 +230,13 @@ class chatBot(object):
         trainM, valM, testM = None, None, None
         if FLAGS.match:
             #logger.info("Building match features for training set ...")
-            trainM = create_match_features(train, self.indx2candid, self.kb)
+            trainM = create_match_features(self.trainData, self.indx2candid, self.kb)
             #logger.info("Done")
             #logger.info("Building match features for validation set ...")
-            valM = create_match_features(dev, self.indx2candid, self.kb)
+            valM = create_match_features(self.valData, self.indx2candid, self.kb)
             #logger.info("Done")
             #logger.info("Building match features for test set ...")
-            testM = create_match_features(test, self.indx2candid, self.kb)
+            #testM = create_match_features(self.testData, self.indx2candid, self.kb)
             #logger.info("Done")
 
         print("Training Size", n_train)
@@ -269,8 +271,8 @@ class chatBot(object):
                     train_preds += list(pred)
     
                 val_preds = model.predict(valS, valQ, get_temporal_encoding(valS, random_time=0.0), True, valM)
-                train_acc = metrics.accuracy_score(np.array(train_preds), train_labels)
-                val_acc = metrics.accuracy_score(val_preds, val_labels)
+                train_acc = metrics.accuracy_score(np.array(train_preds), trainA)
+                val_acc = metrics.accuracy_score(val_preds, valA)
                 
                 last_train_acc = train_acc
                 last_val_acc = val_acc

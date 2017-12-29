@@ -8,6 +8,7 @@ from __future__ import division
 import tensorflow as tf
 import numpy as np
 from six.moves import range
+from datetime import datetime
 
 def get_tensorflow_version():
     ver = tf.__version__
@@ -45,8 +46,8 @@ def zero_nil_slot(t, name=None):
     with op_scope(values=[t], name=name, default_name="zero_nil_slot") as name:
         t = tf.convert_to_tensor(t, name="t")
         s = tf.shape(t)[1]
-        z = tf.zeros(tf.pack([1, s]))
-        return tf.concat(0, [z, tf.slice(t, [1, 0], [-1, -1])], name=name)
+        z = tf.zeros(tf.stack([1, s]))
+        return tf.concat([z, tf.slice(t, [1, 0], [-1, -1])], 0, name=name)
 
 def add_gradient_noise(t, stddev=1e-3, name=None):
     """
@@ -65,7 +66,7 @@ def add_gradient_noise(t, stddev=1e-3, name=None):
         gn = tf.random_normal(tf.shape(t), stddev=stddev)
         return tf.add(t, gn, name=name)
 
-class MemN2N_Dialog(object):
+class MemN2NDialogMatch(object):
     """End-To-End Memory Network."""
     def __init__(self, 
         batch_size, 
@@ -84,6 +85,7 @@ class MemN2N_Dialog(object):
         global_step=None,
         encoding=position_encoding,
         session=tf.Session(),
+        task_id=1,
         name='MemN2N_Dialog'):
         """Creates an End-To-End Memory Network
 
@@ -140,6 +142,10 @@ class MemN2N_Dialog(object):
         self._name = name
 
         self._build_inputs()
+
+        timestamp = datetime.now().strftime('%Y%m%d-%H%M%S')
+        self.root_dir = "%s_%s_%s_%s/" % ('task',
+                                          str(task_id), 'summary_output', timestamp)
         
         self._encoding = tf.constant(encoding(self._sentence_size, self._embedding_size), name="encoding")
 
@@ -164,7 +170,7 @@ class MemN2N_Dialog(object):
                     ) # (batch_size, nb_answers)
         else:
             raise # not implemented
-        cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits, tf.cast(self._answers, tf.float32), name="cross_entropy")
+        cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels = self._answers, name="cross_entropy")
         cross_entropy_sum = tf.reduce_sum(cross_entropy, name="cross_entropy_sum")
 
         # loss op
@@ -189,6 +195,7 @@ class MemN2N_Dialog(object):
 
         # assign ops
         self.loss_op = loss_op
+        self.graph_output = loss_op
         self.predict_op = predict_op
         self.predict_proba_op = predict_proba_op
         self.predict_log_proba_op = predict_log_proba_op
@@ -200,11 +207,11 @@ class MemN2N_Dialog(object):
 
 
     def _build_inputs(self):
-        self._stories = tf.placeholder(tf.int32, [None, self._memory_size, self._sentence_size], name="stories")
+        self._stories = tf.placeholder(tf.int32, [None, None, self._sentence_size], name="stories")
         self._queries = tf.placeholder(tf.int32, [None, self._sentence_size], name="queries")
 #         self._answers = tf.placeholder(tf.int32, [None, self._vocab_size], name="answers")
-        self._answers = tf.placeholder(tf.int32, [None, self._nb_answers], name="answers")
-        self._temporal = tf.placeholder(tf.int32, [None, self._memory_size], name="temproal")
+        self._answers = tf.placeholder(tf.int32, [None], name="answers")
+        self._temporal = tf.placeholder(tf.int32, [None, None], name="temproal")
         self._linear_start = tf.placeholder(tf.bool, [], name="linear_start")
         self._match_features = tf.placeholder(tf.float32, [None, 7, self._nb_answers], name="match_features")
         
@@ -215,16 +222,16 @@ class MemN2N_Dialog(object):
             self._weight_matrices = []
             self._T_weight_matrices = []
             
-            A = tf.concat(0, [ nil_word_slot, self._init([self._vocab_size-1, self._embedding_size]) ])
+            A = tf.concat([ nil_word_slot, self._init([self._vocab_size-1, self._embedding_size]) ], 0)
             self._weight_matrices.append(tf.Variable(A, name="A"))
-            TA = tf.concat(0, [ nil_word_slot, self._init([self._memory_size, self._embedding_size]) ])
+            TA = tf.concat([ nil_word_slot, self._init([self._memory_size, self._embedding_size]) ], 0)
             self._T_weight_matrices.append(tf.Variable(TA, name='TA'))
             
             for i in range(1, self._hops + 1):
-                C = tf.concat(0, [ nil_word_slot, self._init([self._vocab_size-1, self._embedding_size]) ])
+                C = tf.concat([ nil_word_slot, self._init([self._vocab_size-1, self._embedding_size]) ], 0)
                 self._weight_matrices.append(tf.Variable(C, name="C" + str(i)))
 
-                TC = tf.concat(0, [ nil_word_slot, self._init([self._memory_size, self._embedding_size]) ])
+                TC = tf.concat([ nil_word_slot, self._init([self._memory_size, self._embedding_size]) ], 0)
                 self._T_weight_matrices.append(tf.Variable(TC, name='TC'))
 
             self.Wa = tf.Variable(
@@ -281,16 +288,16 @@ class MemN2N_Dialog(object):
     def _build_vars_lw(self):
         with tf.variable_scope(self._name):
             nil_word_slot = tf.zeros([1, self._embedding_size])
-            A = tf.concat(0, [ nil_word_slot, self._init([self._vocab_size-1, self._embedding_size]) ])
-            B = tf.concat(0, [ nil_word_slot, self._init([self._vocab_size-1, self._embedding_size]) ])
-            C = tf.concat(0, [ nil_word_slot, self._init([self._vocab_size-1, self._embedding_size]) ])
+            A = tf.concat([ nil_word_slot, self._init([self._vocab_size-1, self._embedding_size]) ], 0)
+            B = tf.concat([ nil_word_slot, self._init([self._vocab_size-1, self._embedding_size]) ], 0)
+            C = tf.concat([ nil_word_slot, self._init([self._vocab_size-1, self._embedding_size]) ], 0)
             self.A = tf.Variable(A, name="A")
             self.B = tf.Variable(B, name="B")
             self.C = tf.Variable(C, name="C")
 
-            TA = tf.concat(0, [ nil_word_slot, self._init([self._memory_size, self._embedding_size]) ])
+            TA = tf.concat([ nil_word_slot, self._init([self._memory_size, self._embedding_size]) ], 0)
             self.TA = tf.Variable(TA, name='TA')
-            TC = tf.concat(0, [ nil_word_slot, self._init([self._memory_size, self._embedding_size]) ])
+            TC = tf.concat([ nil_word_slot, self._init([self._memory_size, self._embedding_size]) ], 0)
             self.TC = tf.Variable(TC, name='TC')
 
             self.H = tf.Variable(self._init([self._embedding_size, self._embedding_size]), name="H")
@@ -351,7 +358,7 @@ class MemN2N_Dialog(object):
         # answer_n_hot_expanded: [1, vocab_size, nb_answers]
         answer_n_hot_tiled = tf.tile(answer_n_hot_expanded, [batch_size, 1, 1])
         # answer_n_hot_tiled: [None, vocab_size, nb_answers]
-        return tf.concat(1, [answer_n_hot_tiled, match_features])
+        return tf.concat([answer_n_hot_tiled, match_features], 1)
         # return: [None, vocab_size + 7, nb_answers]
 
     def _choose_response_with_match(self, u, Wa, answer_n_hot_concat):
@@ -367,7 +374,7 @@ class MemN2N_Dialog(object):
         # u_Wa: [None, vocab_size + 7]
         u_Wa_expanded = tf.expand_dims(u_Wa, dim=1)
         # u_Wa_expanded: [None, 1, vocab_size + 7]
-        res = tf.batch_matmul(u_Wa_expanded, answer_n_hot_concat)
+        res = tf.matmul(u_Wa_expanded, answer_n_hot_concat)
         # res: [None, 1, nb_answers]
         res = tf.reduce_sum(res, 1)
         # res: [None, nb_answers]
