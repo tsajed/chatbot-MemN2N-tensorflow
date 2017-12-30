@@ -210,7 +210,11 @@ class chatBot(object):
             # Whichever of candidate_size or candidate_sentence_size is higher, that should be allowed
             s, q, a = vectorize_data(
                 data, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
-            preds = self.model.predict(s, q)
+            m = None
+            if FLAGS.match:
+                m = create_match_features([(s,q,a)], self.indx2candid, self.kb)
+            preds = self.model.predict(s, q, get_temporal_encoding(s, random_time=0.0), False, m)
+
             r = self.indx2candid[preds[0]]
             print(r)
             r = tokenize(r)
@@ -320,11 +324,13 @@ class chatBot(object):
         else:
             testS, testQ, testA = vectorize_data(
                 self.testData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
-            testM = create_match_features(self.testData, self.indx2candid, self.kb)
+            testM = None
+            if FLAGS.match:
+                testM = create_match_features(self.testData, self.indx2candid, self.kb)
             n_test = len(testS)
             test_labels = np.argmax(testA, axis=1)
             print("Testing Size", n_test)
-            test_preds = model.predict(testS, testQ, get_temporal_encoding(testS, random_time=0.0), linear_start, testM)
+            test_preds = self.batch_predict(testS, testQ, n_test, testM)
             test_acc = metrics.accuracy_score(test_preds, test_labels)
             # test_preds = self.batch_predict(testS, testQ, n_test)
             # test_acc = metrics.accuracy_score(test_preds, testA)
@@ -337,7 +343,7 @@ class chatBot(object):
             s = S[start:end]
             q = Q[start:end]
             m = M[start:end] if FLAGS.match else None
-            pred = self.model.predict(s, q, get_temporal_encoding(s, random_time=0.0), True, m)
+            pred = self.model.predict(s, q, get_temporal_encoding(s, random_time=0.0), False, m)
             preds += list(pred)
         return preds
 
