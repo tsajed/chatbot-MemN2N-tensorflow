@@ -41,9 +41,9 @@ def load_dialog_task(data_dir, task_id, candid_dic, isOOV):
     s = 'dialog-babi-task{}-'.format(task_id)
     train_file = [f for f in files if s in f and 'trn' in f][0]
     if isOOV:
-        test_file = [f for f in files if s in f and 'tst-OOV' in f][0]
+        test_file = [f for f in files if s in f and 'tst-OOV-dynamic' in f][0]
     else: 
-        test_file = [f for f in files if s in f and 'tst.' in f][0]
+        test_file = [f for f in files if s in f and 'tst-dynamic.' in f][0]
     val_file = [f for f in files if s in f and 'dev' in f][0]
     train_data = get_dialogs(train_file,candid_dic)
     test_data = get_dialogs(test_file,candid_dic)
@@ -207,12 +207,12 @@ def vectorize_data(data, word_idx, sentence_size, batch_size, candidates_size, m
         lq = max(0, sentence_size - len(query))
         q = [word_idx[w] if w in word_idx else 0 for w in query] + [0] * lq
 
-        y = np.zeros(candidates_size)
-        y[answer] = 1
+        # y = np.zeros(candidates_size)
+        # y[answer] = 1
 
         S.append(np.array(ss))
         Q.append(np.array(q))
-        A.append(np.array(y))
+        A.append(np.array(answer))
     return S, Q, A
 
 def vectorize_data_match(data, word_idx, sentence_size, batch_size, candidates_size, max_memory_size):

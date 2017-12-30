@@ -32,7 +32,7 @@ tf.flags.DEFINE_string("model_dir", "model/",
                        "Directory containing memn2n model checkpoints")
 tf.flags.DEFINE_boolean('train', True, 'if True, begin to train')
 tf.flags.DEFINE_boolean('interactive', False, 'if True, interactive')
-tf.flags.DEFINE_boolean('OOV', False, 'if True, use OOV test set')
+tf.flags.DEFINE_boolean('OOV', True, 'if True, use OOV test set')
 
 FLAGS = tf.flags.FLAGS
 print("Started Task:", FLAGS.task_id)
@@ -68,14 +68,21 @@ class chatBot(object):
         data = self.trainData + self.testData + self.valData
 
         self.build_vocab(data, candidates)
+        self.set_max_sentence_length()
         # self.candidates_vec=vectorize_candidates_sparse(candidates,self.word_idx)
+
+        self.trainS, self.trainQ, self.trainA = vectorize_data(
+            self.trainData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
+        self.valS, self.valQ, self.valA = vectorize_data(
+            self.valData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
+
         self.candidates_vec = vectorize_candidates(
             candidates, self.word_idx, self.candidate_sentence_size)
         optimizer = tf.train.AdamOptimizer(
             learning_rate=self.learning_rate, epsilon=self.epsilon)
         self.sess = tf.Session()
         # Set max sentence vector size
-        self.set_max_sentence_length()
+        self.build_vocab(data, candidates)
         # Need to understand more about sentence size. Model failing because sentence size > candidate_sentence_size? Answers longer than queries?
         self.model = MemN2NDialog(self.batch_size, self.vocab_size, self.n_cand, self.max_sentence_size, self.embedding_size, self.candidates_vec, session=self.sess,
                                   hops=self.hops, max_grad_norm=self.max_grad_norm, optimizer=optimizer, task_id=task_id)
@@ -150,12 +157,12 @@ class chatBot(object):
             nid += 1
 
     def train(self):
-        trainS, trainQ, trainA = vectorize_data(
-            self.trainData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
-        valS, valQ, valA = vectorize_data(
-            self.valData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
-        n_train = len(trainS)
-        n_val = len(valS)
+        # trainS, trainQ, trainA = vectorize_data(
+        #     self.trainData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
+        # valS, valQ, valA = vectorize_data(
+        #     self.valData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
+        n_train = len(self.trainS)
+        n_val = len(self.valS)
 
         print("Training Size", n_train)
         print("Validation Size", n_val)
@@ -169,17 +176,17 @@ class chatBot(object):
             np.random.shuffle(batches)
             total_cost = 0.0
             for start, end in batches:
-                s = trainS[start:end]
-                q = trainQ[start:end]
-                a = trainA[start:end]
+                s = self.trainS[start:end]
+                q = self.trainQ[start:end]
+                a = self.trainA[start:end]
                 cost_t = self.model.batch_fit(s, q, a)
                 total_cost += cost_t
             if t % self.evaluation_interval == 0:
-                train_preds = self.batch_predict(trainS, trainQ, n_train)
-                val_preds = self.batch_predict(valS, valQ, n_val)
+                train_preds = self.batch_predict(self.trainS, self.trainQ, n_train)
+                val_preds = self.batch_predict(self.valS, self.valQ, n_val)
                 train_acc = metrics.accuracy_score(
-                    np.array(train_preds), trainA)
-                val_acc = metrics.accuracy_score(val_preds, valA)
+                    np.array(train_preds), self.trainA)
+                val_acc = metrics.accuracy_score(val_preds, self.valA)
                 print('-----------------------')
                 print('Epoch', t)
                 print('Total Cost:', total_cost)
@@ -243,6 +250,7 @@ if __name__ == '__main__':
     # chatbot.run()
     if FLAGS.train:
         chatbot.train()
+        chatbot.test()
     else:
         chatbot.test()
     chatbot.close_session()

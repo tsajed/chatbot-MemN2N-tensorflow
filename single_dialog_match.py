@@ -33,7 +33,7 @@ tf.flags.DEFINE_string("model_dir", "model/",
 tf.flags.DEFINE_boolean('train', True, 'if True, begin to train')
 tf.flags.DEFINE_boolean('interactive', False, 'if True, interactive')
 tf.flags.DEFINE_boolean('OOV', False, 'if True, use OOV test set')
-tf.flags.DEFINE_boolean("match", False, "Use the match features [False]")
+tf.flags.DEFINE_boolean("match", True, "Use the match features [False]")
 tf.flags.DEFINE_string("kb_file", "data/dialog-bAbI-tasks/dialog-babi-kb-all.txt", "KB file path")
 tf.flags.DEFINE_float("random_time", 0.1, "Random time [0.1]")
 FLAGS = tf.flags.FLAGS
@@ -129,14 +129,20 @@ class chatBot(object):
         data = self.trainData + self.testData + self.valData
 
         self.build_vocab(data, candidates)
+        self.set_max_sentence_length()
         # self.candidates_vec=vectorize_candidates_sparse(candidates,self.word_idx)
+        self.trainS, self.trainQ, self.trainA = vectorize_data(
+            self.trainData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
+        self.valS, self.valQ, self.valA = vectorize_data(
+            self.valData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
+
         self.candidates_vec = vectorize_candidates(
             candidates, self.word_idx, self.candidate_sentence_size)
         optimizer = tf.train.AdamOptimizer(
             learning_rate=self.learning_rate, epsilon=self.epsilon)
         self.sess = tf.Session()
         # Set max sentence vector size
-        self.set_max_sentence_length()
+        self.build_vocab(data, candidates)
 
         answer_n_hot = np.zeros((self.vocab_size, len(self.candid2indx)))
         for ans_it in range(len(self.indx2candid)):
@@ -227,12 +233,12 @@ class chatBot(object):
             nid += 1
 
     def train(self):
-        trainS, trainQ, trainA = vectorize_data(
-            self.trainData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
-        valS, valQ, valA = vectorize_data(
-            self.valData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
-        n_train = len(trainS)
-        n_val = len(valS)
+        # trainS, trainQ, trainA = vectorize_data(
+        #     self.trainData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
+        # valS, valQ, valA = vectorize_data(
+        #     self.valData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
+        n_train = len(self.trainS)
+        n_val = len(self.valS)
         batch_size = self.batch_size
 
         trainM, valM, testM = None, None, None
@@ -255,17 +261,17 @@ class chatBot(object):
         batches = [(start, end) for start, end in batches]
         best_validation_accuracy = 0
 
-        train_labels = np.argmax(trainA, axis=1)
+        train_labels = np.argmax(self.trainA, axis=1)
         #test_labels = np.argmax(testA, axis=1)
-        val_labels = np.argmax(valA, axis=1)
+        val_labels = np.argmax(self.valA, axis=1)
 
         for t in range(1, self.epochs + 1):
             np.random.shuffle(batches)
             total_cost = 0.0
             for start, end in batches:
-                s = trainS[start:end]
-                q = trainQ[start:end]
-                a = trainA[start:end]
+                s = self.trainS[start:end]
+                q = self.trainQ[start:end]
+                a = self.trainA[start:end]
                 m = trainM[start:end] if FLAGS.match else None
                 temporal = get_temporal_encoding(s, random_time=FLAGS.random_time)
                 cost_t = self.model.batch_fit(s, q, a, temporal, False, m)
@@ -275,15 +281,15 @@ class chatBot(object):
                 train_preds = []
                 for start in range(0, n_train, self.batch_size):
                     end = start + self.batch_size
-                    s = trainS[start:end]
-                    q = trainQ[start:end]
-                    m = trainM[start:end] if FLAGS.match else None
+                    s = self.trainS[start:end]
+                    q = self.trainQ[start:end]
+                    m = self.trainM[start:end] if FLAGS.match else None
                     temporal = get_temporal_encoding(s, random_time=0.0)
                     pred = self.model.predict(s, q, temporal, False, m)
                     train_preds += list(pred)
     
                 #val_preds = self.model.predict(valS, valQ, get_temporal_encoding(valS, random_time=0.0), True, valM)
-                val_preds = self.batch_predict(valS, valQ, n_val, valM)
+                val_preds = self.batch_predict(self.valS, self.valQ, n_val, valM)
                 train_acc = metrics.accuracy_score(np.array(train_preds), train_labels)
                 val_acc = metrics.accuracy_score(val_preds, val_labels)
                 
