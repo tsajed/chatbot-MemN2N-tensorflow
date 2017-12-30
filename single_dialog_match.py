@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 from __future__ import print_function
 
-from data_utils import load_dialog_task, vectorize_data, load_candidates, vectorize_candidates, vectorize_candidates_sparse, tokenize, parse_kb
+from data_utils import load_dialog_task, vectorize_data_match, load_candidates, vectorize_candidates, vectorize_candidates_sparse, tokenize, parse_kb
 from sklearn import metrics
 from memn2n import MemN2NDialog
 from memn2n import MemN2NDialogMatch
@@ -131,9 +131,9 @@ class chatBot(object):
         self.build_vocab(data, candidates)
         self.set_max_sentence_length()
         # self.candidates_vec=vectorize_candidates_sparse(candidates,self.word_idx)
-        self.trainS, self.trainQ, self.trainA = vectorize_data(
+        self.trainS, self.trainQ, self.trainA = vectorize_data_match(
             self.trainData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
-        self.valS, self.valQ, self.valA = vectorize_data(
+        self.valS, self.valQ, self.valA = vectorize_data_match(
             self.valData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
 
         self.candidates_vec = vectorize_candidates(
@@ -214,7 +214,7 @@ class chatBot(object):
             data = [(context, u, -1)]
             # Need to take care of the candidate sentence size > sentence size. In both main function and here
             # Whichever of candidate_size or candidate_sentence_size is higher, that should be allowed
-            s, q, a = vectorize_data(
+            s, q, a = vectorize_data_match(
                 data, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
             m = None
             if FLAGS.match:
@@ -233,9 +233,9 @@ class chatBot(object):
             nid += 1
 
     def train(self):
-        # trainS, trainQ, trainA = vectorize_data(
+        # trainS, trainQ, trainA = vectorize_data_match(
         #     self.trainData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
-        # valS, valQ, valA = vectorize_data(
+        # valS, valQ, valA = vectorize_data_match(
         #     self.valData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
         n_train = len(self.trainS)
         n_val = len(self.valS)
@@ -283,7 +283,7 @@ class chatBot(object):
                     end = start + self.batch_size
                     s = self.trainS[start:end]
                     q = self.trainQ[start:end]
-                    m = self.trainM[start:end] if FLAGS.match else None
+                    m = trainM[start:end] if FLAGS.match else None
                     temporal = get_temporal_encoding(s, random_time=0.0)
                     pred = self.model.predict(s, q, temporal, False, m)
                     train_preds += list(pred)
@@ -328,7 +328,7 @@ class chatBot(object):
         if self.isInteractive:
             self.interactive()
         else:
-            testS, testQ, testA = vectorize_data(
+            testS, testQ, testA = vectorize_data_match(
                 self.testData, self.word_idx, self.max_sentence_size, self.batch_size, self.n_cand, self.memory_size)
             testM = None
             if FLAGS.match:
@@ -366,6 +366,11 @@ if __name__ == '__main__':
     # chatbot.run()
     if FLAGS.train:
         chatbot.train()
+        print("OOV=" + str(FLAGS.OOV))
+        print("match=" + str(FLAGS.match))
+        chatbot.test()
     else:
+        print("OOV=" + str(FLAGS.OOV))
+        print("match=" + str(FLAGS.match))
         chatbot.test()
     chatbot.close_session()
