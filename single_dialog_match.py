@@ -33,7 +33,7 @@ tf.flags.DEFINE_string("model_dir", "model/",
 tf.flags.DEFINE_boolean('train', True, 'if True, begin to train')
 tf.flags.DEFINE_boolean('interactive', False, 'if True, interactive')
 tf.flags.DEFINE_boolean('OOV', False, 'if True, use OOV test set')
-tf.flags.DEFINE_boolean("match", True, "Use the match features [False]")
+tf.flags.DEFINE_boolean("match", False, "Use the match features [False]")
 tf.flags.DEFINE_string("kb_file", "data/dialog-bAbI-tasks/dialog-babi-kb-all.txt", "KB file path")
 tf.flags.DEFINE_float("random_time", 0.1, "Random time [0.1]")
 FLAGS = tf.flags.FLAGS
