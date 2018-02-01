@@ -159,16 +159,48 @@ class nltkHelper(object):
 
 		file.write(full_story)
 
+	def generate_disrupts_from_file(self, file, file_input):
+		stories = file_input.split("\n\n")
+		full_story = ""
+		join_string = " "
+		for i, story in enumerate(stories):
+			if story == "":
+				continue
+			sents = story.split("\n")
+
+			num = "5"
+			disrupt = ""
+			disrupt_num = "1"
+			int_num = 5
+			int_disrupt_num = 1
+			total_str = ""
+
+			for j in range(4):
+				sent_split = sents[0].split(" ")
+				disrupt = disrupt + disrupt_num + " " + join_string.join(sent_split[1:]) + "\n"
+				int_disrupt_num = int_disrupt_num + 1
+				disrupt_num = str(int_disrupt_num)
+
+			for j, sent in enumerate(sents):
+				sent_split = sent.split(" ")
+				total_str = total_str + num + " " + join_string.join(sent_split[1:]) + "\n"
+				int_num = int_num + 1
+				num = str(int_num)
+
+			full_story = full_story + disrupt + total_str + "\n"
+
+		file.write(full_story)
+
 if __name__ == '__main__':
-	task_id = 5
-	data_dir = "data/1-1-QA-without-context/"
+	task_id = 6
+	data_dir = "data/dialog-bAbI-tasks/"
 
 	gen_data = nltkHelper(data_dir, task_id)
-	f = open(data_dir + "dialog-babi-task" + str(task_id) + "-full-dialogs-tst-OOV-dynamic.txt", "w")
+	f = open(data_dir + "dialog-babi-task" + str(task_id) + "-dstc2-tst-disrupt.txt", "w")
 	# gen_data.generate_multi_dialogs(f)
 
-	f_in = open(data_dir + "dialog-babi-task" + str(task_id) + "-full-dialogs-tst-OOV.txt", "r")
-	gen_data.generate_multi_dialogs_from_file(f, f_in.read())
+	f_in = open(data_dir + "dialog-babi-task" + str(task_id) + "-dstc2-tst.txt", "r")
+	gen_data.generate_disrupts_from_file(f, f_in.read())
 
 	f.close()
 	f_in.close()

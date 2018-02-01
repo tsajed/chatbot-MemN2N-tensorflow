@@ -39,12 +39,12 @@ def load_dialog_task(data_dir, task_id, candid_dic, isOOV):
     files = os.listdir(data_dir)
     files = [os.path.join(data_dir, f) for f in files]
     s = 'dialog-babi-task{}-'.format(task_id)
-    train_file = [f for f in files if s in f and 'trn' in f][0]
+    train_file = [f for f in files if s in f and 'trn.' in f][0]
     if isOOV:
-        test_file = [f for f in files if s in f and 'tst-OOV' in f][0]
+        test_file = [f for f in files if s in f and 'tst-OOV-disrupt.' in f][0]
     else: 
-        test_file = [f for f in files if s in f and 'tst.' in f][0]
-    val_file = [f for f in files if s in f and 'dev' in f][0]
+        test_file = [f for f in files if s in f and 'tst-disrupt.' in f][0]
+    val_file = [f for f in files if s in f and 'dev.' in f][0]
     train_data = get_dialogs(train_file,candid_dic)
     test_data = get_dialogs(test_file,candid_dic)
     val_data = get_dialogs(val_file,candid_dic)
